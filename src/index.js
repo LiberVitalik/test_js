@@ -1,1 +1,5 @@
-console.log('TEST APP');
+import './scss/style.scss';
+
+console.log('123, TEST APP');
+
+

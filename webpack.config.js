@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const miniCss = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -14,8 +15,16 @@ module.exports = {
                 use: 'svg-inline-loader'
             },
             {
-                test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                test: /\.html$/i,
+                loader: 'html-loader',
+            },
+            {
+                test:/\.(s*)css$/,
+                use: [
+                    miniCss.loader,
+                    'css-loader',
+                    'sass-loader',
+                ]
             },
             {
                 test: /\.(js)$/,
@@ -32,7 +41,12 @@ module.exports = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin()
+        new HtmlWebpackPlugin({
+            template: './src/components/view/view.html'
+        }),
+        new miniCss({
+            filename: 'style.css',
+        })
     ],
     mode: 'production',
     devServer: {
